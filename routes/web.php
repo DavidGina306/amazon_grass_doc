@@ -21,4 +21,5 @@ Auth::routes();
 /**Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('expedicao/', '') */
-Route::get('/expedicao/loja/{filial}/{pedido}', 'ExpedicaoController@emSeparacao')->name('get.expedicao');
+Route::get('/desmembramento/filial/{filial}/pedido/{pedido}', 'ExpedicaoController@getPedidosFilial')->name('get.pedido');
+Route::post('/desmembramento/updatePedido', 'ExpedicaoController@updatePedido')->name('post.pedido');

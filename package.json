@@ -24,11 +24,14 @@
         "axios": "^0.19",
         "bootstrap": "^4.5.2",
         "bootstrap-vue": "^2.16.0",
+        "izitoast": "^1.4.0",
         "jquery": "^3.2",
         "moment": "latest",
         "nprogress": "^0.2.0",
         "popper.js": "^1.12",
         "v-mask": "^2.2.3",
-        "vue-loading-overlay": "^3.3.3"
+        "vue-izitoast": "^1.2.1",
+        "vue-loading-overlay": "^3.3.3",
+        "vue-sweetalert2": "^3.0.8"
     }
 }
