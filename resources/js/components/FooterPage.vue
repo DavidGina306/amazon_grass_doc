@@ -1,9 +1,8 @@
 <template>
-    <div>
-         <footer class="fixarRodape">
-            <p center>&copy; Company 2017-2018</p>
+         <footer class="fixarRodape text-center">
+            <small>&copy; 2020 CAA - Comércio Amazonense de Alumínio </small>
+            <img height="40px" src="/images/logo01.png">
         </footer>
-    </div>
 </template>
 
 <script>
