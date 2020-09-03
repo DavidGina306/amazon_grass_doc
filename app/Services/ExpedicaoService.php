@@ -24,6 +24,7 @@ class ExpedicaoService
                 where
                 POSICAO != 'F' AND
                 materialdeconstrucao = 'N' AND
+                CONDVENDA = 8 AND
                 CODFILIAL = ".$request->filial." AND
                 NUMPED = ".(int) $request->pedido."
                 "),
@@ -42,23 +43,16 @@ class ExpedicaoService
     public static function updatePedido($request)
     {
         try {
-            dd($request->all());
             return [
                 'status' => true,
-                'data' => DB::select(" select
-                numped,
-                data,
-                codfilial,
-                posicao,
-                obsfretenf3,
-                materialdeconstrucao
-                from pcpedc
-                where
-                POSICAO != 'F' AND
-                materialdeconstrucao = 'N' AND
-                CODFILIAL = ".$request->filial." AND
-                NUMPED = ".(int) $request->pedido."
-                "),
+                'data' => DB::table('pcpedc')
+                ->where('POSICAO','<>', 'F')
+                ->where('materialdeconstrucao', 'N')
+                ->where('CONDVENDA', 8)
+                ->where('CODFILIAL', $request->filial)
+                ->where('NUMPED', $request->pedido)->update([
+                    'materialdeconstrucao' => 'S'
+                ]),
                 'msg' => 'Sucesso!'
             ];
         } catch (\Throwable $th) {

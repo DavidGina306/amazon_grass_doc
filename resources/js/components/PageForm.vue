@@ -2,7 +2,11 @@
 <template>
   <b-container class="bv-example-row">
     <div class="mt-5 mb-2">
-      <b-card title="Desmembramento" sub-title="Atualização de desmembramento">
+      <b-card
+        title="Desmembramento"
+        sub-title="Procue um pedido dentro de uma filial para desmembramento"
+      >
+        <loading :active.sync="isLoading" :is-full-page="false"></loading>
         <b-card-text>
           <!-- Some quick example text to build on the
           <em>card title</em> and make up the bulk of the card's
@@ -24,7 +28,7 @@
                   placeholder="Diginte o número do Pedido"
                 ></b-form-input>
               </b-form-group>
-              <b-button type="submit" variant="primary">
+              <b-button :disabled="btBuscarDisabled" type="submit" variant="primary">
                 <i class="fa fa-search"></i> Buscar
               </b-button>
               <b-button type="reset" variant="secondary">
@@ -39,23 +43,24 @@
                       <th class="border-0" style="width: 300px">#</th>
                       <th class="border-0">PEDIDO</th>
                       <th class="border-0">
-                        <i class="fa fa-user" /> DATA
+                        <i class="fas fa-calendar-alt"></i> DATA
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(item, index) in  pedidos" :key="index">
                       <td>
-                        <b-button variant="primary" @click="confirmarDesmembramento">
+                        <b-button
+                          :disabled="btDesmembrarDisabled"
+                          variant="primary"
+                          @click="confirmarDesmembramento"
+                        >
                           <i class="fa fa-save" aria-hidden="true"></i> Desmembrar
                         </b-button>
                       </td>
                       <td>{{item.numped}}</td>
                       <td class>
-                        <span>
-                          <i class="far fa-clock" />
-                          {{item.data}}
-                        </span>
+                        <span>{{formatDate(item.data)}}</span>
                       </td>
                     </tr>
                   </tbody>
@@ -70,9 +75,19 @@
   </b-container>
 </template>
 <script>
+const moment = require("moment");
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 export default {
   data() {
     return {
+      btBuscarDisabled: false,
+      btDesmembrarDisabled: false,
+      isLoading: false,
+      info: {
+        timeout: 20000,
+        position: "center",
+      },
       form: {},
       pedidos: {},
       options: [
@@ -94,15 +109,15 @@ export default {
         buttons: [
           [
             "<button><b>Sim</b></button>",
-                (instance, toast) =>{
-                    console.log(this);
-                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
-                },
-                true,
+            (instance, toast) => {
+              this.submmitDesemembramento();
+              instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+            },
+            true,
           ],
           [
-            "<button>NO</button>",
-            (instance, toast) =>{
+            "<button>Não</button>",
+            (instance, toast) => {
               instance.hide({ transitionOut: "fadeOut" }, toast, "button");
             },
           ],
@@ -110,7 +125,7 @@ export default {
         onClosing: (instance, toast) => {
           console.info("Closing | closedBy: ");
         },
-        onClosed:(instance, toast) => {
+        onClosed: (instance, toast) => {
           console.info("Closed | closedBy: ");
         },
       },
@@ -118,20 +133,49 @@ export default {
   },
   methods: {
     confirmarDesmembramento() {
-      this.$toast.question("Are you sure about that?", "Hey", this.question);
+      let str = `Você realmente deseja desmembrar o pedido ${this.form.pedido} na filial ${this.form.filial} ?`;
+      this.$toast.question(str, "Atençao!", this.question);
     },
     submmitDesemembramento() {
+      this.isLoading = true;
+      this.btDesmembrarDisabled = true;
       axios
         .post("/desmembramento/updatePedido", this.form)
-        .then((res) => {
-          console.log(res);
+        .then(({ data }) => {
+          this.isLoading = false;
+          if ((data.data = 1)) {
+            this.pedidos = [];
+            this.$toast.success(
+              `Pedido  <b>${this.form.pedido}<b> na filial <b>${this.form.filial}<b> desmembrado com suceso!`,
+              "Sucesso",
+              this.info
+            );
+            this.form.filial = null;
+            this.form.pedido = "";
+          } else {
+            this.$toast.warning(
+              ` Não foi possivel alterar ${this.form.pedido} da filial ${this.form.filial}!`,
+              "Atenção",
+              this.info
+            );
+          }
+          this.btDesmembrarDisabled = false;
         })
         .catch((err) => {
-          console.error(err);
+          console.log(err);
+          this.isLoading = false;
+          this.$toast.error(
+            `Erro ao alterar <b>${this.form.pedido}<b> da filial <b>${this.form.filial}<b>!`,
+            "Erro",
+            this.info
+          );
+          this.btDesmembrarDisabled = false;
         });
     },
     onSubmit(evt) {
       evt.preventDefault();
+      this.isLoading = true;
+      this.btBuscarDisabled = true;
       axios
         .get(
           `/desmembramento/filial/${this.form.filial}/pedido/${this.form.pedido}`
@@ -139,46 +183,43 @@ export default {
         .then(({ data }) => {
           if (Object.keys(data.data).length > 0) {
             this.pedidos = data.data;
+            this.isLoading = false;
+            this.btBuscarDisabled = false;
           } else {
-            console.log("veio pra ca");
             this.pedidos = [];
-            this.$swal({
-              title: "<strong> Atenção! </strong>",
-              icon: "info",
-              text: `Pedido de número ${this.form.pedido} na filial ${this.form.filial} não encontrado para desmembramento.`,
-              showCloseButton: true,
-              focusConfirm: false,
-              confirmButtonText: '<i class="fa fa-thumbs-up"></i> Ok!',
-              confirmButtonAriaLabel: "Ok!",
-            });
+            this.isLoading = false;
+            this.$toast.info(
+              `Pedido de número ${this.form.pedido} na filial ${this.form.filial} não encontrado para desmembramento.`,
+              "Sem Resultado",
+              this.info
+            );
+            this.btBuscarDisabled = false;
           }
         })
         .catch((err) => {
-          this.$swal({
-            icon: "error",
-            title: "Oops...",
-            text: "Erro ao buscar Pedido!",
-          });
+          this.isLoading = false;
+
+          this.$toast.error(
+            `Erro ao alterar ${this.form.pedido} da filial ${this.form.filial}!`,
+            "Erro",
+            this.info
+          );
+          this.btBuscarDisabled = false;
         });
       setTimeout(() => {}, 2000);
     },
     onReset(evt) {
       evt.preventDefault();
-      // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
+      this.form.filial = null;
+      this.form.pedido = "";
+      this.pedidos = [];
+    },
+    formatDate(dateToFormat) {
+      return moment(dateToFormat).format("DD/MM/YYYY");
     },
   },
   created() {
     this.form.filial = null;
-    this.$toast.question('Are you sure about that?', 'Hey', this.question)
   },
 };
 </script>
