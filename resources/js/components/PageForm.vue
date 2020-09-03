@@ -76,7 +76,7 @@ export default {
       form: {},
       pedidos: {},
       options: [
-        { value: null, text: "Please select an option" },
+        { value: null, text: "Selecione a Filial" },
         { value: 1, text: "FILIAL - 1" },
         { value: 2, text: "FILIAL - 2" },
         { value: 3, text: "FILIAL - 3" },
@@ -94,23 +94,24 @@ export default {
         buttons: [
           [
             "<button><b>Sim</b></button>",
-            function (instance, toast) {
-              instance.hide({ transitionOut: "fadeOut" }, toast, "button");
-            },
-            true,
+                (instance, toast) =>{
+                    console.log(this);
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+                },
+                true,
           ],
           [
             "<button>NO</button>",
-            function (instance, toast) {
+            (instance, toast) =>{
               instance.hide({ transitionOut: "fadeOut" }, toast, "button");
             },
           ],
         ],
-        onClosing: function (instance, toast, closedBy) {
-          console.info("Closing | closedBy: " + closedBy);
+        onClosing: (instance, toast) => {
+          console.info("Closing | closedBy: ");
         },
-        onClosed: function (instance, toast, closedBy) {
-          console.info("Closed | closedBy: " + closedBy);
+        onClosed:(instance, toast) => {
+          console.info("Closed | closedBy: ");
         },
       },
     };
@@ -175,12 +176,9 @@ export default {
       });
     },
   },
-  mounted() {
-      console.log(IziToast);
-    IziToast.show({
-      title: "Hey",
-      message: "What would you like to add?",
-    });
+  created() {
+    this.form.filial = null;
+    this.$toast.question('Are you sure about that?', 'Hey', this.question)
   },
 };
 </script>

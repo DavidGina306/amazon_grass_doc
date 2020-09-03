@@ -2045,12 +2045,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var _this = this;
+
     return {
       form: {},
       pedidos: {},
       options: [{
         value: null,
-        text: "Please select an option"
+        text: "Selecione a Filial"
       }, {
         value: 1,
         text: "FILIAL - 1"
@@ -2076,6 +2078,7 @@ __webpack_require__.r(__webpack_exports__);
         zindex: 999,
         position: "center",
         buttons: [["<button><b>Sim</b></button>", function (instance, toast) {
+          console.log(_this);
           instance.hide({
             transitionOut: "fadeOut"
           }, toast, "button");
@@ -2084,11 +2087,11 @@ __webpack_require__.r(__webpack_exports__);
             transitionOut: "fadeOut"
           }, toast, "button");
         }]],
-        onClosing: function onClosing(instance, toast, closedBy) {
-          console.info("Closing | closedBy: " + closedBy);
+        onClosing: function onClosing(instance, toast) {
+          console.info("Closing | closedBy: ");
         },
-        onClosed: function onClosed(instance, toast, closedBy) {
-          console.info("Closed | closedBy: " + closedBy);
+        onClosed: function onClosed(instance, toast) {
+          console.info("Closed | closedBy: ");
         }
       }
     };
@@ -2105,22 +2108,22 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     onSubmit: function onSubmit(evt) {
-      var _this = this;
+      var _this2 = this;
 
       evt.preventDefault();
       axios.get("/desmembramento/filial/".concat(this.form.filial, "/pedido/").concat(this.form.pedido)).then(function (_ref) {
         var data = _ref.data;
 
         if (Object.keys(data.data).length > 0) {
-          _this.pedidos = data.data;
+          _this2.pedidos = data.data;
         } else {
           console.log("veio pra ca");
-          _this.pedidos = [];
+          _this2.pedidos = [];
 
-          _this.$swal({
+          _this2.$swal({
             title: "<strong> Atenção! </strong>",
             icon: "info",
-            text: "Pedido de n\xFAmero ".concat(_this.form.pedido, " na filial ").concat(_this.form.filial, " n\xE3o encontrado para desmembramento."),
+            text: "Pedido de n\xFAmero ".concat(_this2.form.pedido, " na filial ").concat(_this2.form.filial, " n\xE3o encontrado para desmembramento."),
             showCloseButton: true,
             focusConfirm: false,
             confirmButtonText: '<i class="fa fa-thumbs-up"></i> Ok!',
@@ -2128,7 +2131,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       })["catch"](function (err) {
-        _this.$swal({
+        _this2.$swal({
           icon: "error",
           title: "Oops...",
           text: "Erro ao buscar Pedido!"
@@ -2137,7 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {}, 2000);
     },
     onReset: function onReset(evt) {
-      var _this2 = this;
+      var _this3 = this;
 
       evt.preventDefault(); // Reset our form values
 
@@ -2148,16 +2151,13 @@ __webpack_require__.r(__webpack_exports__);
 
       this.show = false;
       this.$nextTick(function () {
-        _this2.show = true;
+        _this3.show = true;
       });
     }
   },
-  mounted: function mounted() {
-    console.log(IziToast);
-    IziToast.show({
-      title: "Hey",
-      message: "What would you like to add?"
-    });
+  created: function created() {
+    this.form.filial = null;
+    this.$toast.question('Are you sure about that?', 'Hey', this.question);
   }
 });
 
@@ -83525,8 +83525,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/expedicao/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/expedicao/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\amazon_grass_doc\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\amazon_grass_doc\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
