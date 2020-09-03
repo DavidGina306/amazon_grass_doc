@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'empregado',
         'passwords' => 'users',
     ],
 
@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'empregado' => [
+            'redirectTo' => 'home',
+            'driver' => 'session',
+            'provider' => 'empregado',
+        ],
     ],
 
     /*
@@ -71,10 +76,10 @@ return [
             'model' => App\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'empregado' => [
+            'driver' => 'eloquent',
+            'model' => App\Empregado::class,
+        ],
     ],
 
     /*
