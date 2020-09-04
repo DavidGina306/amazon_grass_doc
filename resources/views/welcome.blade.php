@@ -19,7 +19,7 @@
               padding-bottom: 100px;
             }
             footer{
-                background: #e2e2e6;
+                background: #F3F5F4;
                 width: 100%;
                 height: 50px;
                 position: absolute;
