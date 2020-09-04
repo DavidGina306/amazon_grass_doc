@@ -31,7 +31,7 @@
     </head>
     <body>
         <div id='app'>
-            <navbar-menu></navbar-menu>
+        <navbar-menu user="{{json_encode($user)}}"></navbar-menu>
             <div id="wrapper">
                 <div class="container body-content">
                     <page-form></page-form>
