@@ -14,7 +14,7 @@
             <template v-slot:button-content>
               <em>Usuário </em>
             </template>
-            <b-dropdown-item href="#">Sair</b-dropdown-item>
+            <b-dropdown-item href="/logout">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>

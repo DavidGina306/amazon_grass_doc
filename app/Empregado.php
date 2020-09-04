@@ -2,16 +2,27 @@
 
 namespace App;
 
+use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Crypt;
 
-class Empregado extends Model
+class Empregado extends Authenticatable
 {
+    protected $guarded = [] ;
+    protected $primaryKey = 'MATRICULA';
     protected $table = 'PCEMPR';
+    protected $guard = 'empregado';
+
+    public function getAuthIdentifier()
+    {
+        return $this->matricula;
+    }
+
     public function getAuthPassword()
     {
-        $senha =  DB::select("SELECT decrypt (senhabd, usuariobd) AS SENHABD2 FROM PCEMPR  WHERE NOME_GUERRA = '".$this->nome_guerra."'")[0];
-        return $senha->senhabd2;
+        return $this->senhabd;
     }
     /**
    * Overrides the method to ignore the remember token.

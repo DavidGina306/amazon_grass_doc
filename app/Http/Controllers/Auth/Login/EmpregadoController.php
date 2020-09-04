@@ -8,7 +8,7 @@ use App\Http\Controllers\Auth\LoginController as DefaultLoginController;
 
 class EmpregadoController extends DefaultLoginController
 {
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'home';
     public function __construct()
     {
         $this->middleware('guest:empregado')->except('logout');

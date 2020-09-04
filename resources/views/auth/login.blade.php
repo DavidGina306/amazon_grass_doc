@@ -22,7 +22,7 @@
                             </div>
 
                             <div class="form-label-group">
-                                <input type="password" name='senhabd' id="inputPassword" class="form-control" placeholder="Senha"
+                                <input type="password" name='password' id="inputPassword" class="form-control" placeholder="Senha"
                                     required>
                                     <label for="password"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Senha') }}</label>
