@@ -25,8 +25,8 @@
         }
 
         body {
-            background: #007bff;
-            background: linear-gradient(to right, #0062E6, #33AEFF);
+            background: #406582;
+            background: linear-gradient(to right,   #406582, #33AEFF);
         }
 
         .card-signin {
