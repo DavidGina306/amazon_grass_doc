@@ -14,9 +14,12 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <i class="fas fa-user"></i><em><b>{{ userFormated.nome }}</b></em>
+              <i class="fas fa-user"></i>
+              <em style="color: white;">
+                <b>{{ " "+userFormated.nome }}</b>
+              </em>
             </template>
-            <b-dropdown-item href="/logout">Sair</b-dropdown-item>
+            <b-dropdown-item href="#" v-on:click.prevent="confirm($event)">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -34,14 +37,57 @@ export default {
   },
   data() {
     return {
-        userFormated: null
+      userFormated: null,
+      question: {
+        timeout: 20000,
+        close: false,
+        overlay: true,
+        toastOnce: true,
+        id: "question",
+        zindex: 999,
+        position: "center",
+        buttons: [
+          [
+            "<button><b>Sim</b></button>",
+            (instance, toast) => {
+              this.logout();
+              instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+            },
+            true,
+          ],
+          [
+            "<button>Não</button>",
+            (instance, toast) => {
+              instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+            },
+          ],
+        ],
+        onClosing: (instance, toast) => {
+          console.info("Closing | closedBy: ");
+        },
+        onClosed: (instance, toast) => {
+          console.info("Closed | closedBy: ");
+        },
+      },
     };
   },
   created() {
-      this.userFormated = JSON.parse(this.user);
-      console.log(this.userFormated);
+    this.userFormated = JSON.parse(this.user);
+    console.log(this.userFormated);
   },
-  methods: {},
+  methods: {
+    confirm(event) {
+      this.$toast.question("Você realmente deseja sair ?", "Atençao!", this.question);
+    },
+    logout() {
+      axios.post("/logout").then(({ data }) => {
+        console.log(data);
+        window.location.href = "/login";
+      }).catch((error) => {
+        window.location.href = "/login";
+      });
+    },
+  },
   filters: {},
 };
 </script>

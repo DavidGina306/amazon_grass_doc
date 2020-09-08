@@ -79,6 +79,12 @@ const moment = require("moment");
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 export default {
+  props: {
+    user: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       btBuscarDisabled: false,
@@ -89,6 +95,7 @@ export default {
         position: "center",
       },
       form: {},
+      userFormated: null,
       pedidos: {},
       options: [
         { value: null, text: "Selecione a Filial" },
@@ -220,6 +227,8 @@ export default {
   },
   created() {
     this.form.filial = null;
+    this.userFormated = JSON.parse(this.user);
+    this.form.user = this.userFormated;
   },
 };
 </script>

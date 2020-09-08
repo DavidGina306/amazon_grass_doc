@@ -12,9 +12,9 @@
                         <form method="POST"  action="{{ route('login') }}">
                             @csrf
                             <div class="form-label-group">
-                                <input type="text"  name='nome_guerra' value="{{ old('login') }}" id="login" class="form-control" placeholder="Login" required autofocus>
+                                <input type="text"  name='nome_guerra' value="{{ old('nome_guerra') }}" id="login" class="form-control" placeholder="Login" required autofocus>
                                 <label for="login" class="col-md-4 col-form-label text-md-right">{{ __('Login') }}</label>
-                                @error('email')
+                                @error('nome_guerra')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -26,7 +26,7 @@
                                     required>
                                     <label for="password"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Senha') }}</label>
-                                    @error('senha')
+                                    @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -39,4 +39,8 @@
             </div>
         </div>
     </div>
+    @if(session()->get('errors'))
+        <show-msg mensagem="Erro" tipo="error"></show-msg>
+    @endif
 @endsection
+

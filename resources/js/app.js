@@ -25,6 +25,8 @@ Vue.component('loading', Loading)
 Vue.component('navbar-menu', require('./components/Main.vue').default);
 Vue.component('page-form', require('./components/PageForm.vue').default);
 Vue.component('page-footer', require('./components/FooterPage.vue').default);
+Vue.component('show-msg', require('./components/ShowIziToast.vue').default);
+
 
 
 const app = new Vue({

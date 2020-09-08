@@ -34,7 +34,7 @@
         <navbar-menu user="{{json_encode($user)}}"></navbar-menu>
             <div id="wrapper">
                 <div class="container body-content">
-                    <page-form></page-form>
+                    <page-form  user="{{json_encode($user)}}"></page-form>
                 </div>
             </div>
             <page-footer></page-footer>
