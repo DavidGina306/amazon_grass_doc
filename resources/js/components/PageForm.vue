@@ -2,22 +2,27 @@
 <template>
   <b-container class="bv-example-row">
     <div class="mt-5 mb-2">
+
       <b-card
         title="Desmembramento"
-        sub-title="Procue um pedido dentro de uma filial para desmembramento"
+        sub-title="Busque um pedido dentro de uma filial para desmembramento"
       >
-        <loading :active.sync="isLoading" :is-full-page="false"></loading>
         <b-card-text>
           <!-- Some quick example text to build on the
           <em>card title</em> and make up the bulk of the card's
           content.-->
         </b-card-text>
-
+         <loading
+            backgroundColor="#e5dede"
+            :opacity="0.3"
+            :active.sync="isLoading"
+            :is-full-page="false"
+        ></loading>
         <b-card-text>
           <div>
-            <b-form @submit="onSubmit">
+            <b-form @submit="onSubmit" @reset="onReset">
               <b-form-group id="input-filial" label="Número da Filial:" label-for="id_flial">
-                <b-form-select v-model="form.filial" :options="options" required></b-form-select>
+                <b-form-select v-model="form.filial" :options="options" required @change="mudou()"></b-form-select>
               </b-form-group>
               <b-form-group id="input-pedido" label="Número do Pedido:" label-for="id_pedido">
                 <b-form-input
@@ -25,7 +30,7 @@
                   v-mask="'##############'"
                   v-model="form.pedido"
                   required
-                  placeholder="Diginte o número do Pedido"
+                  placeholder="Digite o número do Pedido"
                 ></b-form-input>
               </b-form-group>
               <b-button :disabled="btBuscarDisabled" type="submit" variant="primary">
@@ -35,7 +40,7 @@
                 <i class="fas fa-eraser"></i> Limpar
               </b-button>
             </b-form>
-            <b-card class="mt-3" header="Listagem de Pedidos">
+            <b-card class="mt-3" header="Pedidos">
               <div class="table-responsive mt-1 vh-65 overflow-hidden table-striped">
                 <table v-if="pedidos.length > 0" class="table overflow-auto">
                   <thead>
@@ -79,6 +84,12 @@ const moment = require("moment");
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 export default {
+  props: {
+    user: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       btBuscarDisabled: false,
@@ -89,6 +100,7 @@ export default {
         position: "center",
       },
       form: {},
+      userFormated: null,
       pedidos: {},
       options: [
         { value: null, text: "Selecione a Filial" },
@@ -133,7 +145,7 @@ export default {
   },
   methods: {
     confirmarDesmembramento() {
-      let str = `Você realmente deseja desmembrar o pedido ${this.form.pedido} na filial ${this.form.filial} ?`;
+      let str = `Você realmente deseja desmembrar o <b>pedido ${this.form.pedido}</b> na <b>Filial ${this.form.filial}</b> ?`;
       this.$toast.question(str, "Atençao!", this.question);
     },
     submmitDesemembramento() {
@@ -146,7 +158,7 @@ export default {
           if ((data.data = 1)) {
             this.pedidos = [];
             this.$toast.success(
-              `Pedido  <b>${this.form.pedido}<b> na filial <b>${this.form.filial}<b> desmembrado com suceso!`,
+              `Pedido  <b>${this.form.pedido}</b> na Filial <b>${this.form.filial}</b> desmembrado com suceso!`,
               "Sucesso",
               this.info
             );
@@ -154,7 +166,7 @@ export default {
             this.form.pedido = "";
           } else {
             this.$toast.warning(
-              ` Não foi possivel alterar ${this.form.pedido} da filial ${this.form.filial}!`,
+              ` Não foi possivel alterar  p <b> Pedido ${this.form.pedido}</b> da <b>Filial ${this.form.filial}</b>!`,
               "Atenção",
               this.info
             );
@@ -165,7 +177,7 @@ export default {
           console.log(err);
           this.isLoading = false;
           this.$toast.error(
-            `Erro ao alterar <b>${this.form.pedido}<b> da filial <b>${this.form.filial}<b>!`,
+            `Erro ao alterar <b>${this.form.pedido}</b> da filial <b>${this.form.filial}</b>!`,
             "Erro",
             this.info
           );
@@ -189,7 +201,7 @@ export default {
             this.pedidos = [];
             this.isLoading = false;
             this.$toast.info(
-              `Pedido de número ${this.form.pedido} na filial ${this.form.filial} não encontrado para desmembramento.`,
+              `Pedido de número <b>${this.form.pedido}</b> na filial <b>${this.form.filial}</b> não encontrado para desmembramento.`,
               "Sem Resultado",
               this.info
             );
@@ -200,7 +212,7 @@ export default {
           this.isLoading = false;
 
           this.$toast.error(
-            `Erro ao alterar ${this.form.pedido} da filial ${this.form.filial}!`,
+            `Erro ao alterar <b>${this.form.pedido}</b> da filial <b>${this.form.filial}</b>!`,
             "Erro",
             this.info
           );
@@ -212,14 +224,20 @@ export default {
       evt.preventDefault();
       this.form.filial = null;
       this.form.pedido = "";
+      console.log(this.pedidos);
       this.pedidos = [];
     },
     formatDate(dateToFormat) {
       return moment(dateToFormat).format("DD/MM/YYYY");
     },
+    mudou() {
+      console.log("mudou");
+    },
   },
   created() {
     this.form.filial = null;
+    this.userFormated = JSON.parse(this.user);
+    this.form.user = this.userFormated;
   },
 };
 </script>

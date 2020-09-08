@@ -23,3 +23,17 @@ Auth::routes();
 Route::post('expedicao/', '') */
 Route::get('/desmembramento/filial/{filial}/pedido/{pedido}', 'ExpedicaoController@getPedidosFilial')->name('get.pedido');
 Route::post('/desmembramento/updatePedido', 'ExpedicaoController@updatePedido')->name('post.pedido');
+
+// Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::namespace('Auth\Login')->group(function () {
+    Route::get('login', 'EmpregadoController@showLoginForm')->name('login');
+    Route::post('login', 'EmpregadoController@login')->name('login');
+    Route::post('logout', 'EmpregadoController@logout')->name('logout');
+});
+Route::get('home', 'Home\EmpregadoHomeController@index')->name('home');
+// Route::prefix('empregado')
+//     ->as('empregado.')
+//     ->group(function() {
+// });

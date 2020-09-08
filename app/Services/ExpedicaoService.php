@@ -51,7 +51,8 @@ class ExpedicaoService
                 ->where('CONDVENDA', 8)
                 ->where('CODFILIAL', $request->filial)
                 ->where('NUMPED', $request->pedido)->update([
-                    'materialdeconstrucao' => 'S'
+                    'materialdeconstrucao' => 'S',
+                    'ASSINATURA' => $request->user['nome']
                 ]),
                 'msg' => 'Sucesso!'
             ];

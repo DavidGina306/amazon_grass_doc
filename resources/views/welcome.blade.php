@@ -5,6 +5,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
+        <link rel="shortcut icon" href="{{{ asset('images/logo01.png') }}}">
+
         <style>
             html, body {
                 margin: 0;
@@ -19,7 +21,7 @@
               padding-bottom: 100px;
             }
             footer{
-                background: #e2e2e6;
+                background: #F3F5F4;
                 width: 100%;
                 height: 50px;
                 position: absolute;
@@ -31,10 +33,10 @@
     </head>
     <body>
         <div id='app'>
-            <navbar-menu></navbar-menu>
+        <navbar-menu user="{{json_encode($user)}}"></navbar-menu>
             <div id="wrapper">
                 <div class="container body-content">
-                    <page-form></page-form>
+                    <page-form  user="{{json_encode($user)}}"></page-form>
                 </div>
             </div>
             <page-footer></page-footer>
