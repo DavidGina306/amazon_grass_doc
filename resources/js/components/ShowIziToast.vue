@@ -53,7 +53,7 @@ export default {
 
         case "error":
           this.$toast.error(
-            "Usuario ou senha essão incorretos",
+            "Usuário ou senha essão incorretos",
             "Erro",
             this.info
           );
