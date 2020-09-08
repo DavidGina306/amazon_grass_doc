@@ -11,8 +11,8 @@
                         <h5 class="card-title text-center"><B>DESMEMBRAMENTO</B></h5>
                         <form method="POST"  action="{{ route('login') }}">
                             @csrf
-                            <div class="form-label-group">
-                                <input type="text"  name='nome_guerra' value="{{ old('nome_guerra') }}" id="login" class="form-control" placeholder="Login" required autofocus>
+                            <div class="form-label-group" style="text-transform: capitalize">
+                                <input type="text"  oninput="handleInput(event)" name='nome_guerra' value="{{ old('nome_guerra') }}" id="login" class="form-control" placeholder="Login" required autofocus>
                                 <label for="login" class="col-md-4 col-form-label text-md-right">{{ __('Login') }}</label>
                                 @error('nome_guerra')
                                 <span class="invalid-feedback" role="alert">
