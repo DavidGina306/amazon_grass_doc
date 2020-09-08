@@ -2,22 +2,27 @@
 <template>
   <b-container class="bv-example-row">
     <div class="mt-5 mb-2">
+
       <b-card
         title="Desmembramento"
-        sub-title="Buscque um pedido dentro de uma filial para desmembramento"
+        sub-title="Busque um pedido dentro de uma filial para desmembramento"
       >
-        <loading :active.sync="isLoading" :is-full-page="false"></loading>
         <b-card-text>
           <!-- Some quick example text to build on the
           <em>card title</em> and make up the bulk of the card's
           content.-->
         </b-card-text>
-
+         <loading
+            backgroundColor="#e5dede"
+            :opacity="0.3"
+            :active.sync="isLoading"
+            :is-full-page="false"
+        ></loading>
         <b-card-text>
           <div>
-            <b-form @submit="onSubmit">
+            <b-form @submit="onSubmit" @reset="onReset">
               <b-form-group id="input-filial" label="Número da Filial:" label-for="id_flial">
-                <b-form-select v-model="form.filial" :options="options" required></b-form-select>
+                <b-form-select v-model="form.filial" :options="options" required @change="mudou()"></b-form-select>
               </b-form-group>
               <b-form-group id="input-pedido" label="Número do Pedido:" label-for="id_pedido">
                 <b-form-input
@@ -140,7 +145,7 @@ export default {
   },
   methods: {
     confirmarDesmembramento() {
-      let str = `Você realmente deseja desmembrar o pedido <b>${this.form.pedido}</b> na filial <b>${this.form.filial}</b> ?`;
+      let str = `Você realmente deseja desmembrar o <b>pedido ${this.form.pedido}</b> na <b>Filial ${this.form.filial}</b> ?`;
       this.$toast.question(str, "Atençao!", this.question);
     },
     submmitDesemembramento() {
@@ -153,7 +158,7 @@ export default {
           if ((data.data = 1)) {
             this.pedidos = [];
             this.$toast.success(
-              `Pedido  <b>${this.form.pedido}</b> na filial <b>${this.form.filial}</b> desmembrado com suceso!`,
+              `Pedido  <b>${this.form.pedido}</b> na Filial <b>${this.form.filial}</b> desmembrado com suceso!`,
               "Sucesso",
               this.info
             );
@@ -161,7 +166,7 @@ export default {
             this.form.pedido = "";
           } else {
             this.$toast.warning(
-              ` Não foi possivel alterar <b>${this.form.pedido}</b> da filial <b>${this.form.filial}</b>!`,
+              ` Não foi possivel alterar  p <b> Pedido ${this.form.pedido}</b> da <b>Filial ${this.form.filial}</b>!`,
               "Atenção",
               this.info
             );
@@ -219,10 +224,14 @@ export default {
       evt.preventDefault();
       this.form.filial = null;
       this.form.pedido = "";
+      console.log(this.pedidos);
       this.pedidos = [];
     },
     formatDate(dateToFormat) {
       return moment(dateToFormat).format("DD/MM/YYYY");
+    },
+    mudou() {
+      console.log("mudou");
     },
   },
   created() {
