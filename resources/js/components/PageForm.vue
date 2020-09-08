@@ -166,7 +166,7 @@ export default {
             this.form.pedido = "";
           } else {
             this.$toast.warning(
-              ` Não foi possivel alterar  p <b> Pedido ${this.form.pedido}</b> da <b>Filial ${this.form.filial}</b>!`,
+              `Não foi possivel alterar o <b> Pedido ${this.form.pedido}</b> da <b>Filial ${this.form.filial}</b>!`,
               "Atenção",
               this.info
             );
