@@ -29,7 +29,7 @@
                             </div>
                             @error('nome_guerra')
                             <div class="alert alert-danger" style="text-align: center;font-size: 13px;">
-                                <span style="text-align: center;">Login ou Senha estão incorretos!</span>
+                                <span style="text-align: center;">Atenção! Login ou Senha não são válidos. Tente Novamente.</span>
                             </div>
                             @enderror
 
