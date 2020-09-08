@@ -53,7 +53,7 @@ export default {
 
         case "error":
           this.$toast.error(
-            "Usuário ou senha essão incorretos",
+            "Atenção! Login ou Senha digitados não são válidos. Tente Novamente.",
             "Ops..",
             this.info
           );
