@@ -26,13 +26,15 @@
                                     required>
                                     <label for="password"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Senha') }}</label>
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                             </div>
+                            @error('nome_guerra')
+                            <div class="alert alert-danger" style="text-align: center;font-size: 13px;">
+                                <span style="text-align: center;">Login ou Senha estão incorretos!</span>
+                            </div>
+                            @enderror
+
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Entrar</button>
+
                         </form>
                     </div>
                 </div>
