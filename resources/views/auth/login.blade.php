@@ -5,7 +5,7 @@
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
                     <div class="card-body">
-                        <div  class="text-center">
+                        <div  class="text-center mb-1 mt-1">
                             <img src={{{ asset('images/logo01.png') }}} class="rounded-circle  text-center" alt="caa" width="200" height="150">
                         </div>
                         <form method="POST"  action="{{ route('login') }}">

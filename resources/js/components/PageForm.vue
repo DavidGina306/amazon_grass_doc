@@ -100,8 +100,8 @@ export default {
       btDesmembrarDisabled: false,
       isLoading: false,
       info: {
-        timeout: 20000,
-        position: "center",
+        timeout: 2000,
+        position: "topRight",
       },
       form: {},
       userFormated: null,
@@ -162,7 +162,7 @@ export default {
           if ((data.data = 1)) {
             this.pedidos = [];
             this.$toast.success(
-              `Pedido  <b>${this.form.pedido}</b> na Filial <b>${this.form.filial}</b> desmembrado com suceso!`,
+              `Pedido  <b>${this.form.pedido}</b> na Filial <b>${this.form.filial}</b> desmembrado com sucesso!`,
               "Sucesso",
               this.info
             );
@@ -181,7 +181,7 @@ export default {
           console.log(err);
           this.isLoading = false;
           this.$toast.error(
-            `Erro ao alterar <b>${this.form.pedido}</b> da filial <b>${this.form.filial}</b>!`,
+            `Erro ao alterar o Pedido <b>${this.form.pedido}</b> da <b> Filial ${this.form.filial}</b>!`,
             "Erro",
             this.info
           );
@@ -205,7 +205,7 @@ export default {
             this.pedidos = [];
             this.isLoading = false;
             this.$toast.info(
-              `Pedido de número <b>${this.form.pedido}</b> na filial <b>${this.form.filial}</b> não encontrado para desmembramento.`,
+              `Pedido <b>${this.form.pedido}</b> na filial <b>${this.form.filial}</b> não encontrado para desmembramento.`,
               "Sem Resultado",
               this.info
             );
@@ -216,7 +216,7 @@ export default {
           this.isLoading = false;
 
           this.$toast.error(
-            `Erro ao alterar <b>${this.form.pedido}</b> da filial <b>${this.form.filial}</b>!`,
+            `Erro ao alterar <b> Pedido ${this.form.pedido}</b> da <b> Filial ${this.form.filial}</b>!`,
             "Erro",
             this.info
           );
