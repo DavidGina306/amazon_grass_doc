@@ -6,7 +6,7 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <div  class="text-center">
-                            <img src={{{ asset('images/logo01.png') }}} class="rounded-circle  text-center" alt="caa" width="180" height="200">
+                            <img src={{{ asset('images/logo01.png') }}} class="rounded-circle  text-center" alt="caa" width="200" height="150">
                         </div>
                         <form method="POST"  action="{{ route('login') }}">
                             @csrf
