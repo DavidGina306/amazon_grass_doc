@@ -4,7 +4,7 @@
   >
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand href="#">
-        <img height="40px" src="/images/logo01.png" />
+        <img height="40px" :src="image" />
       </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -19,7 +19,7 @@
                 <b>{{ " "+userFormated.nome }}</b>
               </em>
             </template>
-            <b-dropdown-item href="#" v-on:click.prevent="confirm($event)">Sair</b-dropdown-item>
+            <b-dropdown-item href="#" v-on:click.prevent="logout()">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -34,6 +34,14 @@ export default {
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+      required: true,
+    },
+    urllogout: {
+        type: String,
+        required: true
+    }
   },
   data() {
     return {
@@ -73,18 +81,16 @@ export default {
   },
   created() {
     this.userFormated = JSON.parse(this.user);
-    console.log(this.userFormated);
   },
   methods: {
     confirm(event) {
       this.$toast.question("Você realmente deseja sair ?", "Atençao!", this.question);
     },
     logout() {
-      axios.post("/logout").then(({ data }) => {
-        console.log(data);
+      axios.post(this.urllogout).then(({ data }) => {
         window.location.href = "/login";
       }).catch((error) => {
-        window.location.href = "/login";
+        console.log(error);
       });
     },
   },

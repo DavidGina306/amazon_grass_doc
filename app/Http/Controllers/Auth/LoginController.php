@@ -81,4 +81,6 @@ class LoginController extends Controller
     {
         return 'nome_guerra';
     }
+
+
 }

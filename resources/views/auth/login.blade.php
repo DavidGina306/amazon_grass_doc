@@ -6,14 +6,13 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <div  class="text-center">
-                            <img src="/images/logo01.png" class="rounded-circle  text-center" alt="caa" width="150" height="100">
+                            <img src={{{ asset('images/logo01.png') }}} class="rounded-circle  text-center" alt="caa" width="180" height="200">
                         </div>
-                        <h5 class="card-title text-center"><B>DESMEMBRAMENTO</B></h5>
                         <form method="POST"  action="{{ route('login') }}">
                             @csrf
                             <div class="form-label-group" style="text-transform: capitalize">
                                 <input type="text"  oninput="handleInput(event)" name='nome_guerra' value="{{ old('nome_guerra') }}" id="login" class="form-control" placeholder="Login" required autofocus>
-                                <label for="login" class="col-md-4 col-form-label text-md-right">{{ __('Login') }}</label>
+                                <label for="login" class="col-md-4 col-form-label text-md-right">{{ __('Usuário') }}</label>
                                 @error('nome_guerra')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -29,7 +28,7 @@
                             </div>
                             @error('nome_guerra')
                             <div class="alert alert-danger" style="text-align: center;font-size: 13px;">
-                                <span style="text-align: center;">Atenção! Login ou Senha não são válidos. Tente Novamente.</span>
+                                <span style="text-align: center;">Atenção! Login ou Senha inválidos. Tente Novamente.</span>
                             </div>
                             @enderror
 

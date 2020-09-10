@@ -5,7 +5,7 @@
 
       <b-card
         title="Desmembramento"
-        sub-title="Busque um pedido dentro de uma filial para desmembramento"
+        sub-title=""
       >
         <b-card-text>
           <!-- Some quick example text to build on the
@@ -21,10 +21,10 @@
         <b-card-text>
           <div>
             <b-form @submit="onSubmit" @reset="onReset">
-              <b-form-group id="input-filial" label="Número da Filial:" label-for="id_flial">
+              <b-form-group id="input-filial" label="Filial:" label-for="id_flial">
                 <b-form-select v-model="form.filial" :options="options" required @change="mudou()"></b-form-select>
               </b-form-group>
-              <b-form-group id="input-pedido" label="Número do Pedido:" label-for="id_pedido">
+              <b-form-group id="input-pedido" label="Pedido:" label-for="id_pedido">
                 <b-form-input
                   id="id_pedido"
                   v-mask="'##############'"
@@ -89,6 +89,10 @@ export default {
       type: String,
       required: true,
     },
+    urlPedido: {
+        type: String,
+        required: false
+    }
   },
   data() {
     return {

@@ -33,13 +33,19 @@
     </head>
     <body>
         <div id='app'>
-        <navbar-menu user="{{json_encode($user)}}"></navbar-menu>
+        <navbar-menu
+            user="{{json_encode($user)}}"
+            image="{{{ asset('images/logo01.png') }}}"
+            urllogout="{{ route('logout') }}"
+            ></navbar-menu>
             <div id="wrapper">
                 <div class="container body-content">
-                    <page-form  user="{{json_encode($user)}}"></page-form>
+                    <page-form
+                        user="{{json_encode($user)}}"
+                    ></page-form>
                 </div>
             </div>
-            <page-footer></page-footer>
+            <page-footer image="{{{ asset('images/logo01.png') }}}"></page-footer>
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
