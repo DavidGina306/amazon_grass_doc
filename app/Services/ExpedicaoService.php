@@ -42,8 +42,14 @@ class ExpedicaoService
 
     public static function updatePedido($request)
     {
+        $request->validate([
+            'filial' => 'required',
+            'pedido' => 'required',
+            'user' => 'required'
+        ]);
+        DB::beginTransaction();
         try {
-            return [
+            $data = [
                 'status' => true,
                 'data' => DB::table('pcpedc')
                 ->where('POSICAO','<>', 'F')
@@ -56,12 +62,15 @@ class ExpedicaoService
                 ]),
                 'msg' => 'Sucesso!'
             ];
+            DB::commit();
+            return $data;
         } catch (\Throwable $th) {
+            DB::rollback();
             Log::error($th->getMessage());
             return [
                 'status' => false,
                 'data' => [],
-                'msg' => 'Erro ao buscar pedido'
+                'msg' => 'Erro ao atualizar pedido'
             ];
         }
     }

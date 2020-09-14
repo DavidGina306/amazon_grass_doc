@@ -4,7 +4,7 @@
     <div class="mt-5 mb-2">
 
       <b-card
-        title="Desmembramento"
+        title="Desmembramento de Pedido"
         sub-title=""
       >
         <b-card-text>
